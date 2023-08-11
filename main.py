@@ -2,17 +2,17 @@ import requests
 import argparse
 import time
 
-def get_pm25_data(latitude, longitude, api_key):
-    url = f'https://api.waqi.info/feed/geo:{latitude};{longitude}/?token={api_key}'
+def get_station_data(map_bounds, api_key):
+    url = f'https://api.waqi.info/map/bounds/?latlng={map_bounds}&token={api_key}'
     response = requests.get(url)
     data = response.json()
-    return data['data']['aqi']
+    return data
 
 def calculate_average(pm25_values):
     return sum(pm25_values) / len(pm25_values)
 
 def main():
-    parser = argparse.ArgumentParser(description='Calculate average PM2.5 over n minutes for specified map bounds')
+    parser = argparse.ArgumentParser(description='Calculate average PM2.5 over n minutes for stations within map bounds')
     parser.add_argument('latitude1', type=float, help='Latitude of the first corner')
     parser.add_argument('longitude1', type=float, help='Longitude of the first corner')
     parser.add_argument('latitude2', type=float, help='Latitude of the second corner')
@@ -23,23 +23,19 @@ def main():
 
     args = parser.parse_args()
 
-    latitudes = [args.latitude1, args.latitude2]
-    longitudes = [args.longitude1, args.longitude2]
-
-    latitudes.sort()
-    longitudes.sort()
-
+    map_bounds = f'{args.latitude1},{args.longitude1},{args.latitude2},{args.longitude2}'
     api_key = args.apikey
 
     total_samples = args.period * args.rate
     pm25_values = []
 
-    for lat in latitudes:
-        for lon in longitudes:
-            for _ in range(total_samples):
-                pm25 = get_pm25_data(lat, lon, api_key)
-                pm25_values.append(pm25)
-                time.sleep(60 / args.rate)
+    station_data = get_station_data(map_bounds, api_key)
+
+    for station in station_data['data']:
+        for _ in range(total_samples):
+            pm25 = station['aqi']
+            pm25_values.append(pm25)
+            time.sleep(60 / args.rate)
 
     avg_pm25 = calculate_average(pm25_values)
 
