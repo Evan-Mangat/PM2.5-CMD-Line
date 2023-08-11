@@ -6,7 +6,7 @@ def get_station_data(map_bounds, api_key):
     url = f'https://api.waqi.info/map/bounds/?latlng={map_bounds}&token={api_key}'
     response = requests.get(url)
     data = response.json()
-    return data
+    return data['data']
 
 def calculate_average(pm25_values):
     return sum(pm25_values) / len(pm25_values)
@@ -31,9 +31,9 @@ def main():
 
     station_data = get_station_data(map_bounds, api_key)
 
-    for station in station_data['data']:
+    for station in station_data:
         for _ in range(total_samples):
-            pm25 = station['aqi']
+            pm25 = int(station['aqi'])
             pm25_values.append(pm25)
             time.sleep(60 / args.rate)
 
