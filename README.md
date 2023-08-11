@@ -16,11 +16,11 @@ Installation
 * Install the required packages using the following command:
   pip install -r requirements.txt
 
-Usage
-Run the script with the following command-line arguments:
+Usage  
+Run the script with the following command-line arguments:  
 python script_name.py latitude1 longitude1 latitude2 longitude2 --apikey YOUR_ACTUAL_API_KEY
 
-optionally, one can adjust the period and rate within the command line by typing something that follows this format:
+optionally, one can adjust the period and rate within the command line by typing something that follows this format:  
 python script_name.py latitude1 longitude1 latitude2 longitude2 --period INSERT_PERIOD_NUM --rate INSERT_RATE_NUM --apikey YOUR_ACTUAL_API_KEY
 
 where:
@@ -30,8 +30,8 @@ where:
 * --rate: Sampling rate in samples/minute (default = 1).
 * --apikey: API key for AQICN API (required).
 
-Example
-To calculate the average PM2.5 values for stations within a map bound, use the following example (assuming one wants the default values for period at 5 minutes and rate at 1 sample:
+Example:  
+To calculate the average PM2.5 values for stations within a map bound, use the following example (assuming one wants the default values for period at 5 minutes and rate at 1 sample:  
 python script_name.py 49.28234795142009 -123.12047325624289 40.70726141581518 -74.0208910538649 --apikey YOUR_ACTUAL_API_KEY
 
 Notes
@@ -39,5 +39,5 @@ Notes
 * The AQICN API key is required for authentication; make sure to replace YOUR_ACTUAL_API_KEY with your API key.
 * The calculated average PM2.5 values are based on the specified sampling period and rate.
 
-Acknowledgements
+Acknowledgements:  
 This script was developed by Evan Mangat as a demonstration of using the AQICN API to calculate average PM2.5 values within a map bound.
