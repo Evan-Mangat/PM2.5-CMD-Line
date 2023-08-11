@@ -52,7 +52,10 @@ The script sorts the latitude and longitude values to ensure that the correct ma
 
 To run the script, provide the required command-line arguments, including coordinates and the API key:
 Assuming bash shell:
-python main.py latitude1 longitude1 latitude2 longitude2 --apikey INSERT_API_KEY_HERE
+* python -m venv venv
+* source venv/bin/activate
+* pip install -r requirements.txt
+* python main.py latitude1 longitude1 latitude2 longitude2 --apikey INSERT_API_KEY_HERE
 
 8. Conclusion
 
